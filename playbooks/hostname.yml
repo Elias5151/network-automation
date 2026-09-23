@@ -1,0 +1,21 @@
+---
+- name: Vaihda laitteiden hostname
+  hosts: routers
+  gather_facts: no
+  tasks:
+    - name: Aseta hostname R1:lle
+      cisco.ios.ios_config:
+        lines:
+          - hostname Branch-R1
+      when: inventory_hostname == 'r1'
+
+    - name: Aseta hostname R2:lle
+      cisco.ios.ios_config:
+        lines:
+          - hostname Branch-R2
+      when: inventory_hostname == 'r2'
+
+    - name: Tallenna konfiguraatio (write memory)
+      cisco.ios.ios_config:
+        save_when: always
+
